@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:weather_app/models/weather_model.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 void main() => runApp(const weatherApp());
 
@@ -138,7 +139,9 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Material App Bar')),
+      appBar: AppBar(title: const Text('Material App Bar'),
+      ),
+      backgroundColor: const Color.fromARGB(255, 250, 249, 249),
       body: Column(
         children: [
           Expanded(
@@ -158,15 +161,27 @@ class _HomePageState extends State<HomePage> {
                       borderRadius: BorderRadius.circular(12),
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.grey.withOpacity(0.5),
-                          spreadRadius: 2,
+                          color: const Color.fromARGB(
+                            255,
+                            206,
+                            206,
+                            206,
+                          ).withOpacity(0.5),
+                          spreadRadius: 3,
                           blurRadius: 5,
-                          offset: const Offset(0, 3),
+                          offset: const Offset(0, 1),
                         ),
                       ],
                     ),
                     child: Center(
-                      child: Text(sehirler[index]),
+                      child: Text(
+                        sehirler[index],
+                        style: GoogleFonts.poppins(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.black87,
+                        ),
+                      ),
                     ),
                   ),
                 );
