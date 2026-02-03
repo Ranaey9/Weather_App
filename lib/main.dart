@@ -148,17 +148,27 @@ class _HomePageState extends State<HomePage> {
                 crossAxisSpacing: 12,
                 crossAxisCount: 2,
                 mainAxisSpacing: 12,
-                
               ),
               itemBuilder: (BuildContext context, int index) {
                 return GestureDetector(
                   onTap: () => selectedCity(sehirler[index]),
-                  child: Card(
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: const Color.fromARGB(255, 255, 255, 255),
+                      borderRadius: BorderRadius.circular(12),
+                      boxShadow: [
+                        BoxShadow(
+                          // ignore: deprecated_member_use
+                          color: Colors.grey.withOpacity(0.5),
+                          spreadRadius: 2,
+                          blurRadius: 5,
+                          offset: const Offset(0, 3),
+                        ),
+                      ],
+                    ),
                     child: Center(child: Text(sehirler[index]
-                    
-
-                  ),
-                  ),
+                    ),
+                    ),
                   ),
                 );
               },
