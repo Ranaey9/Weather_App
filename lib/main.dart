@@ -1,4 +1,6 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:weather_app/models/weather_model.dart';
 
 void main() => runApp(const weatherApp());
 
@@ -7,12 +9,10 @@ class weatherApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Material App',
-      home: HomePage()
-    );
+    return const MaterialApp(title: 'Material App', home: HomePage());
   }
 }
+
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
@@ -21,15 +21,152 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final List<String> sehirler = [
+    'Adana',
+    'Adıyaman',
+    'Afyonkarahisar',
+    'Ağrı',
+    'Aksaray',
+    'Amasya',
+    'Ankara',
+    'Antalya',
+    'Ardahan',
+    'Artvin',
+    'Aydın',
+    'Balıkesir',
+    'Bartın',
+    'Batman',
+    'Bayburt',
+    'Bilecik',
+    'Bingöl',
+    'Bitlis',
+    'Bolu',
+    'Burdur',
+    'Bursa',
+    'Çanakkale',
+    'Çankırı',
+    'Çorum',
+    'Denizli',
+    'Diyarbakır',
+    'Düzce',
+    'Edirne',
+    'Elazığ',
+    'Erzincan',
+    'Erzurum',
+    'Eskişehir',
+    'Gaziantep',
+    'Giresun',
+    'Gümüşhane',
+    'Hakkari',
+    'Hatay',
+    'Iğdır',
+    'Isparta',
+    'İstanbul',
+    'İzmir',
+    'Kahramanmaraş',
+    'Karabük',
+    'Karaman',
+    'Kars',
+    'Kastamonu',
+    'Kayseri',
+    'Kilis',
+    'Kırıkkale',
+    'Kırklareli',
+    'Kırşehir',
+    'Kocaeli',
+    'Konya',
+    'Kütahya',
+    'Malatya',
+    'Manisa',
+    'Mardin',
+    'Mersin',
+    'Muğla',
+    'Muş',
+    'Nevşehir',
+    'Niğde',
+    'Ordu',
+    'Osmaniye',
+    'Rize',
+    'Sakarya',
+    'Samsun',
+    'Şanlıurfa',
+    'Siirt',
+    'Sinop',
+    'Şırnak',
+    'Sivas',
+    'Tekirdağ',
+    'Tokat',
+    'Trabzon',
+    'Tunceli',
+    'Uşak',
+    'Van',
+    'Yalova',
+    'Yozgat',
+    'Zonguldak',
+  ];
+
+  String? secilenSehir;
+
+  final dio = Dio(
+    BaseOptions(
+      baseUrl: 'https://api.openweathermap.org/data/2.5/',
+      queryParameters: {
+        "appid": '887f6040190d783a7998db2ff92efe71',
+        "lang": 'tr',
+        "units": 'metric',
+      },
+    ),
+  );
+
+  void selectedCity(String sehir) {
+    setState(() {
+      secilenSehir = sehir;
+      getWeather(sehir);
+    });
+  }
+
+  Future<WeatherModel> getWeather(String secilenSehir) async {
+    final response = await dio.get(
+      'weather',
+      queryParameters: {'q': secilenSehir},
+    );
+    var model = WeatherModel.fromJson(response.data);
+    debugPrint(model.main?.temp.toString());
+    return model;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: const Text('Material App Bar'),
-        ),
-        body: const Center(
-          child: Text('Hello World'),
-        ),
-      );
+      appBar: AppBar(title: const Text('Material App Bar')),
+      body: Column(
+        children: [
+          Expanded(
+            child: GridView.builder(
+              padding: const EdgeInsets.all(16.0),
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisSpacing: 12,
+                crossAxisCount: 2,
+                mainAxisSpacing: 12,
+                
+              ),
+              itemBuilder: (BuildContext context, int index) {
+                return GestureDetector(
+                  onTap: () => selectedCity(sehirler[index]),
+                  child: Card(
+                    child: Center(child: Text(sehirler[index]
+                    
+
+                  ),
+                  ),
+                  ),
+                );
+              },
+              itemCount: sehirler.length,
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }
