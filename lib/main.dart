@@ -158,7 +158,6 @@ class _HomePageState extends State<HomePage> {
                       borderRadius: BorderRadius.circular(12),
                       boxShadow: [
                         BoxShadow(
-                          // ignore: deprecated_member_use
                           color: Colors.grey.withOpacity(0.5),
                           spreadRadius: 2,
                           blurRadius: 5,
@@ -166,8 +165,8 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ],
                     ),
-                    child: Center(child: Text(sehirler[index]
-                    ),
+                    child: Center(
+                      child: Text(sehirler[index]),
                     ),
                   ),
                 );
