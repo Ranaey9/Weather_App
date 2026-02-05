@@ -107,6 +107,7 @@ class _HomePageState extends State<HomePage> {
   ];
 
   String? secilenSehir;
+  Future<WeatherModel>? weatherFuture;
 
   final dio = Dio(
     BaseOptions(
@@ -122,7 +123,7 @@ class _HomePageState extends State<HomePage> {
   void selectedCity(String sehir) {
     setState(() {
       secilenSehir = sehir;
-      getWeather(sehir);
+      weatherFuture = getWeather(sehir);
     });
   }
 
@@ -139,11 +140,28 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Material App Bar'),
-      ),
+      appBar: AppBar(title: const Text('Material App Bar')),
       backgroundColor: const Color.fromARGB(255, 250, 249, 249),
       body: Column(
         children: [
+          if (weatherFuture != null)
+            FutureBuilder(
+              future: weatherFuture,
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Center(child: CircularProgressIndicator());
+                }
+                if (snapshot.hasError) {
+                  return Center(child: Text(snapshot.error.toString()));
+                }
+                if(snapshot.hasError){
+                  return Card(
+                    child: Text(snapshot.data!.name!),
+                  );
+                }
+                return SizedBox();
+              },
+            ),
           Expanded(
             child: GridView.builder(
               padding: const EdgeInsets.all(16.0),
