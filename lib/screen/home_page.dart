@@ -54,7 +54,6 @@ class _HomePageState extends State<HomePage> {
       ),
       body: Column(
         children: [
-          // --- Arama Çubuğu ---
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
             child: Container(
@@ -83,7 +82,6 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
 
-          // --- Sonuç Gösterim Alanı (FutureBuilder) ---
           if (weatherFuture != null)
             FutureBuilder(
               future: weatherFuture,
@@ -108,7 +106,6 @@ class _HomePageState extends State<HomePage> {
               },
             ),
 
-          // --- "Tüm Şehirler" Başlığı ---
           Padding(
             padding: const EdgeInsets.fromLTRB(20, 10, 20, 5),
             child: Align(
@@ -124,7 +121,6 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
 
-          // --- Şehirler Grid Listesi ---
           Expanded(
             child: GridView.builder(
               padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -134,7 +130,6 @@ class _HomePageState extends State<HomePage> {
                 mainAxisSpacing: 10,
                 childAspectRatio: 2.0,
               ),
-              // Burada oluşturduğumuz CityData.sehirler listesini kullanıyoruz
               itemCount: CityData.sehirler.length,
               itemBuilder: (BuildContext context, int index) {
                 final String currentCity = CityData.sehirler[index];
